@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Global Error Handler for Debugging -->
+  <script>
+    (function() {
+      function displayError(title, message, stack) {
+        let errDiv = document.getElementById('debug-error-display');
+        if (!errDiv) {
+          errDiv = document.createElement('div');
+          errDiv.id = 'debug-error-display';
+          errDiv.style.position = 'fixed';
+          errDiv.style.top = '0';
+          errDiv.style.left = '0';
+          errDiv.style.width = '100%';
+          errDiv.style.height = '100%';
+          errDiv.style.background = '#110505';
+          errDiv.style.color = '#ff6b6b';
+          errDiv.style.padding = '30px';
+          errDiv.style.zIndex = '999999';
+          errDiv.style.fontFamily = 'Consolas, Monaco, monospace';
+          errDiv.style.fontSize = '14px';
+          errDiv.style.lineHeight = '1.6';
+          errDiv.style.overflow = 'auto';
+          errDiv.style.boxSizing = 'border-box';
+          document.documentElement.appendChild(errDiv);
+        }
+        errDiv.innerHTML = `
+          <h1 style="color: #ff4757; font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid #ff4757; padding-bottom: 10px;">
+            ${title}
+          </h1>
+          <div style="background: #220a0a; padding: 15px; border-left: 4px solid #ff4757; margin-bottom: 20px; font-weight: bold;">
+            ${message}
+          </div>
+          ${stack ? `<pre style="background: #1a0808; padding: 15px; border: 1px solid #331111; overflow-x: auto;">${stack}</pre>` : ''}
+          <div style="margin-top: 20px; color: #a4b0be; font-size: 12px;">
+            Please report this error to the agent to get it resolved.
+          </div>
+        `;
+      }
+
+      window.addEventListener('error', function(e) {
+        // Suppress benign resize observer errors
+        if (e.message && e.message.includes('ResizeObserver')) return;
+        displayError('Uncaught Runtime Error', e.message || 'Unknown Error', e.error ? e.error.stack : (e.filename + ':' + e.lineno + ':' + e.colno));
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        const reason = e.reason || {};
+        displayError('Promise Rejection Failed', reason.message || String(reason), reason.stack);
+      });
+
+      // Capture resource loading errors (like module resolution failures)
+      window.addEventListener('error', function(e) {
+        if (e.target && (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK')) {
+          displayError('Resource Load Failure', 'Failed to load asset: ' + (e.target.src || e.target.href), 'Check the browser console network tab for details. Common cause: CDN package or file import resolution mismatch.');
+        }
+      }, true);
+    })();
+  </script>
+
+  <title>Anmol | Cinematic Video Editor & Short Film Creator Portfolio</title>
+  <meta name="description" content="Immersive 3D WebGL Portfolio of Anmol, professional video editor and short film creator. Explore narrative, commercial, and editorial timelines.">
+  
+  <!-- Premium Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Vanilla CSS Design System -->
+  <link rel="stylesheet" href="./style.css?v=1.0.12">
+</head>
+<body>
+  <!-- Cinematic Film Grain Overlay (2D visual layer) -->
+  <div class="film-grain" id="film-grain-overlay"></div>
+  
+  <!-- Main Mounting Point for React -->
+  <div id="root"></div>
+
+  <!-- Importmap for ESM CDN Dependencies -->
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom": "https://esm.sh/react-dom@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "three": "https://esm.sh/three@0.160.0",
+        "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.15.11?deps=react@18.2.0,react-dom@18.2.0,three@0.160.0",
+        "@react-three/drei": "https://esm.sh/@react-three/drei@9.92.7?deps=react@18.2.0,react-dom@18.2.0,three@0.160.0,@react-three/fiber@8.15.11",
+        "framer-motion": "https://esm.sh/framer-motion@10.16.4?deps=react@18.2.0,react-dom@18.2.0",
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0?deps=react@18.2.0",
+        "gsap": "https://esm.sh/gsap@3.12.2"
+      }
+    }
+  </script>
+
+  <!-- Mount Application -->
+  <script type="module" src="./src/main.js?v=1.0.12"></script>
+</body>
+</html>
