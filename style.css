@@ -41,6 +41,17 @@ html, body {
   scrollbar-color: var(--color-accent-gold) var(--color-bg-charcoal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
 }
 
 /* Webkit Scrollbar */
@@ -1219,4 +1230,197 @@ p {
   color: var(--color-text-white);
   margin-top: 60px;
   opacity: 0.8;
+}
+
+/* ==========================================================================
+   PRODUCTION OPTIMIZATIONS, ACCESSIBILITY, AND MOBILE RESPONSIVENESS OVERRIDES
+   ========================================================================== */
+
+/* iOS dvh support overrides */
+section {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.cinematic-opening {
+  height: 100vh;
+  height: 100dvh;
+}
+.expanded-panel {
+  height: 100vh;
+  height: 100dvh;
+}
+.canvas-container {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Skip link styling for accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--color-accent-gold);
+  color: var(--color-bg-deep);
+  padding: 10px 20px;
+  font-weight: bold;
+  z-index: 100000;
+  transition: top 0.2s ease;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid var(--color-text-white);
+}
+
+/* WCAG focus-visible styling */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 4px;
+}
+
+/* Responsive Overrides & Mobile Performance Tiers */
+@media (max-width: 1024px) {
+  .gallery-container {
+    gap: 25px;
+  }
+  .project-card {
+    flex: 0 0 380px;
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Disable high-GPU film grain overlay on mobile/tablets to fix lag */
+  .film-grain {
+    display: none !important;
+  }
+  
+  section {
+    padding: 8vh 6vw;
+  }
+  
+  .project-card {
+    flex: 0 0 320px;
+    height: 440px;
+    padding: 20px;
+  }
+  
+  .project-info {
+    padding: 25px;
+  }
+  
+  .about-section {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .color-suite-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .ambient-toggle {
+    bottom: 20px;
+    left: 20px;
+    font-size: 0.65rem;
+  }
+
+  .nav-dots {
+    right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    padding: 6vh 5vw;
+  }
+
+  .hero-content {
+    margin-top: 10vh;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+  }
+
+  /* Make project cards fill screen width and height responsively on small phones */
+  .gallery-container {
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding-bottom: 30px;
+  }
+  
+  .project-card {
+    flex: 0 0 85vw;
+    height: 420px;
+    scroll-snap-align: center;
+  }
+
+  .viewer-scopes {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .scope-box {
+    grid-column: span 1 !important;
+    height: 140px;
+  }
+
+  .color-controls-panel {
+    padding: 25px;
+  }
+  
+  .booking-container {
+    padding: 30px 15px;
+  }
+
+  .credit-roll-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+  }
+
+  .credit-role, .credit-value {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Accessibility: prefers-reduced-motion media query */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: scroll !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+
+  .film-grain {
+    display: none !important;
+  }
+
+  .intro-sound-bar,
+  .sound-bar {
+    animation: none !important;
+  }
 }
