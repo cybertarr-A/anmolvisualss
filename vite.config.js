@@ -13,16 +13,6 @@ export default defineConfig({
     minify: 'esbuild',
     // Target modern browsers only
     target: 'es2020',
-    // Chunk splitting strategy
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom'],
-          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-          'vendor-motion': ['framer-motion', 'gsap'],
-        },
-      },
-    },
     // Asset inlining threshold (4KB)
     assetsInlineLimit: 4096,
     // CSS code splitting
