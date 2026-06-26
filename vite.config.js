@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    extensions: ['.jsx', '.js', '.json']
+  },
   build: {
     // No source maps in production — real security
     sourcemap: false,
